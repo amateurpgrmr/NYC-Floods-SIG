@@ -1,0 +1,141 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.0100, 40.6950], [-74.0050, 40.6950], [-74.0050, 40.7000],
+          [-74.0100, 40.7000], [-74.0100, 40.6950]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-25",
+        "satellite": "Sentinel-2",
+        "confidence": 0.92,
+        "water_level": "High",
+        "location": "Red Hook Marina"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.9850, 40.7100], [-73.9800, 40.7100], [-73.9800, 40.7150],
+          [-73.9850, 40.7150], [-73.9850, 40.7100]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-25",
+        "satellite": "Sentinel-2",
+        "confidence": 0.88,
+        "water_level": "Moderate",
+        "location": "Lower Manhattan Seaport"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.9250, 40.5825], [-73.9200, 40.5825], [-73.9200, 40.5875],
+          [-73.9250, 40.5875], [-73.9250, 40.5825]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-26",
+        "satellite": "Sentinel-1",
+        "confidence": 0.95,
+        "water_level": "Very High",
+        "location": "Coney Island Boardwalk"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.8350, 40.5925], [-73.8300, 40.5925], [-73.8300, 40.5975],
+          [-73.8350, 40.5975], [-73.8350, 40.5925]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-26",
+        "satellite": "Sentinel-1",
+        "confidence": 0.90,
+        "water_level": "High",
+        "location": "Canarsie Pier"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.1450, 40.6225], [-74.1400, 40.6225], [-74.1400, 40.6275],
+          [-74.1450, 40.6275], [-74.1450, 40.6225]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-27",
+        "satellite": "Sentinel-2",
+        "confidence": 0.87,
+        "water_level": "Moderate",
+        "location": "Great Kills Park"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.7750, 40.7525], [-73.7700, 40.7525], [-73.7700, 40.7575],
+          [-73.7750, 40.7575], [-73.7750, 40.7525]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-25",
+        "satellite": "Sentinel-2",
+        "confidence": 0.85,
+        "water_level": "Moderate",
+        "location": "Flushing Bay"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.7450, 40.5925], [-73.7400, 40.5925], [-73.7400, 40.5975],
+          [-73.7450, 40.5975], [-73.7450, 40.5925]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-28",
+        "satellite": "Sentinel-1",
+        "confidence": 0.93,
+        "water_level": "Very High",
+        "location": "Rockaway Beach"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.9350, 40.7725], [-73.9300, 40.7725], [-73.9300, 40.7775],
+          [-73.9350, 40.7775], [-73.9350, 40.7725]
+        ]]
+      },
+      "properties": {
+        "detection_date": "2024-09-25",
+        "satellite": "Sentinel-2",
+        "confidence": 0.84,
+        "water_level": "Low",
+        "location": "Randalls Island"
+      }
+    }
+  ]
+}

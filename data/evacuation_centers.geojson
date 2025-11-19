@@ -1,0 +1,1085 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.98834759450574,
+          40.694632261301344
+        ]
+      },
+      "properties": {
+        "name": "Adams St Educational Campus",
+        "address": "283 Adams Street",
+        "city": "Brooklyn",
+        "zip": "11201.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.95147508866324,
+          40.656414223009115
+        ]
+      },
+      "properties": {
+        "name": "M.S. 2 Parkside Prep",
+        "address": "655 Parkside Avenue",
+        "city": "Brooklyn",
+        "zip": "11226.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.8731565648259,
+          40.68917494755181
+        ]
+      },
+      "properties": {
+        "name": "P.S. 7 Abraham Lincoln",
+        "address": "858 Jamaica Avenue",
+        "city": "Brooklyn",
+        "zip": "11208.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9152409755709,
+          40.850045108706404
+        ]
+      },
+      "properties": {
+        "name": "Morris Heights Educational Complex",
+        "address": "1780 Dr. Martin Luther King Jr. Blvd",
+        "city": "Bronx",
+        "zip": "10453.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.80266512114586,
+          40.7096564189796
+        ]
+      },
+      "properties": {
+        "name": "Hillcrest H.S.",
+        "address": "160-05 Highland Avenue",
+        "city": "Jamaica",
+        "zip": "11432.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9740069021562,
+          40.785926191269716
+        ]
+      },
+      "properties": {
+        "name": "Old Brandeis H.S.",
+        "address": "145 W 84 Street",
+        "city": "New York",
+        "zip": "10024.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.85175430783214,
+          40.72324213805428
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 190 Russell Sage",
+        "address": "68-17 Austin Street",
+        "city": "Forest Hills",
+        "zip": "11375.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.94581431348983,
+          40.81471159765893
+        ]
+      },
+      "properties": {
+        "name": "P.S. 92 Mary McLeod Bethune",
+        "address": "222 W 134 Street",
+        "city": "New York",
+        "zip": "10030.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86622748089125,
+          40.83820585821531
+        ]
+      },
+      "properties": {
+        "name": "P.S. 102 Joseph O. Loretan",
+        "address": "1827 Archer Street",
+        "city": "Bronx",
+        "zip": "10460.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.91184670665378,
+          40.69681297881463
+        ]
+      },
+      "properties": {
+        "name": "Bushwick Educational Campus",
+        "address": "400 Irving Avenue",
+        "city": "Brooklyn",
+        "zip": "11237.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9663563303682,
+          40.759299630226494
+        ]
+      },
+      "properties": {
+        "name": "Midtown East Campus",
+        "address": "233 E 56 Street",
+        "city": "New York",
+        "zip": "10022.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.21396005256327,
+          40.541989803454754
+        ]
+      },
+      "properties": {
+        "name": "P.S. 56 Louis Desario",
+        "address": "250 Kramer Avenue",
+        "city": "Staten Island",
+        "zip": "10309.0",
+        "accessible": "Y",
+        "borocode": "5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.919664554437,
+          40.83549265459262
+        ]
+      },
+      "properties": {
+        "name": "P.S./I.S. 218 Hernandez Dual Language Magnet",
+        "address": "1220 Gerard Avenue",
+        "city": "Bronx",
+        "zip": "10452.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.76682865353507,
+          40.745078241809026
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 74 Nathaniel Hawthorne",
+        "address": "61-15 Oceania Street",
+        "city": "Bayside",
+        "zip": "11362.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.93237354807005,
+          40.68793814772122
+        ]
+      },
+      "properties": {
+        "name": "Old I.S. 324",
+        "address": "800 Gates Avenue",
+        "city": "Brooklyn",
+        "zip": "11221.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.95626720264204,
+          40.649053301569396
+        ]
+      },
+      "properties": {
+        "name": "P.S. 6",
+        "address": "43 Snyder Avenue",
+        "city": "Brooklyn",
+        "zip": "11226.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.821357047386,
+          40.73497558794618
+        ]
+      },
+      "properties": {
+        "name": "Townsend Harris H.S.",
+        "address": "149-11 Melbourne Avenue",
+        "city": "Flushing",
+        "zip": "11367.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.88859106124357,
+          40.74883381466131
+        ]
+      },
+      "properties": {
+        "name": "P.S. 69 Jackson Heights",
+        "address": "77-02 37 Avenue",
+        "city": "Jackson Heights",
+        "zip": "11372.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.98095024373315,
+          40.74643139547331
+        ]
+      },
+      "properties": {
+        "name": "Norman Thomas H.S.",
+        "address": "111 E 33 Street",
+        "city": "New York",
+        "zip": "10016.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.7288655611345,
+          40.744457286701014
+        ]
+      },
+      "properties": {
+        "name": "Queens H.S. of Teaching",
+        "address": "74-20 Commonwealth Blvd",
+        "city": "Bellerose",
+        "zip": "11426.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.91928775501131,
+          40.6976936325303
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 383 Philippa Schuyler",
+        "address": "1300 Greene Avenue",
+        "city": "Brooklyn",
+        "zip": "11237.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.91417582805788,
+          40.88805858303746
+        ]
+      },
+      "properties": {
+        "name": "M.S./H.S. 141 Riverdale/Kingsbridge Academy",
+        "address": "660 W 237 Street",
+        "city": "Bronx",
+        "zip": "10463.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.98825949249553,
+          40.66028374147973
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 88 Peter Rouget",
+        "address": "544 7 Avenue",
+        "city": "Brooklyn",
+        "zip": "11215.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.8186225050414,
+          40.77485678097445
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 185 Edward Bleeker",
+        "address": "147-26 25 Drive",
+        "city": "Flushing",
+        "zip": "11354.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.93141339544358,
+          40.691232158717774
+        ]
+      },
+      "properties": {
+        "name": "P.S. 26 Jesse Owens",
+        "address": "1014 Lafayette Avenue",
+        "city": "Brooklyn",
+        "zip": "11221.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.85580193959427,
+          40.708524878249314
+        ]
+      },
+      "properties": {
+        "name": "Metropolitan Avenue Campus",
+        "address": "91-30 Metropolitan Avenue",
+        "city": "Forest Hills",
+        "zip": "11375.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.86582315889937,
+          40.74931524379379
+        ]
+      },
+      "properties": {
+        "name": "P.S. 307 Pioneer Academy",
+        "address": "40-20 100 Street",
+        "city": "Corona",
+        "zip": "11368.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.08185476145192,
+          40.645380544708885
+        ]
+      },
+      "properties": {
+        "name": "Curtis H.S.",
+        "address": "105 Hamilton Avenue",
+        "city": "Staten Island",
+        "zip": "10301.0",
+        "accessible": "Y",
+        "borocode": "5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.95124375264218,
+          40.666974703101964
+        ]
+      },
+      "properties": {
+        "name": "Medgar Evers College Prep",
+        "address": "1186 Carroll Street",
+        "city": "Brooklyn",
+        "zip": "11225.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.93875127445513,
+          40.840964628072804
+        ]
+      },
+      "properties": {
+        "name": "P.S. 128 Audubon",
+        "address": "560 W 169 Street",
+        "city": "New York",
+        "zip": "10032.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.1448917169114,
+          40.62301715618512
+        ]
+      },
+      "properties": {
+        "name": "I.S. 51 Edwin Markham",
+        "address": "20 Houston Street",
+        "city": "Staten Island",
+        "zip": "10302.0",
+        "accessible": "Y",
+        "borocode": "5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.90087575096457,
+          40.82733480011782
+        ]
+      },
+      "properties": {
+        "name": "Old I.S. 158",
+        "address": "800 Home Street",
+        "city": "Bronx",
+        "zip": "10456.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.92785269173828,
+          40.852958554935235
+        ]
+      },
+      "properties": {
+        "name": "P.S. 189",
+        "address": "2580 Amsterdam Avenue",
+        "city": "New York",
+        "zip": "10040.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.0147783416429,
+          40.626213105525586
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 259 William McKinley",
+        "address": "7305 Ft Hamilton Parkway",
+        "city": "Brooklyn",
+        "zip": "11228.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.917621309742,
+          40.82811706791636
+        ]
+      },
+      "properties": {
+        "name": "J.H.S. 166 Roberto Clemente",
+        "address": "250 E 164 Street",
+        "city": "Bronx",
+        "zip": "10456.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.90976126070981,
+          40.859151326879235
+        ]
+      },
+      "properties": {
+        "name": "P.S. 15 Inst for Env Learning",
+        "address": "2195 Andrews Avenue",
+        "city": "Bronx",
+        "zip": "10453.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9132600390299,
+          40.674490936322485
+        ]
+      },
+      "properties": {
+        "name": "Old I.S. 55",
+        "address": "2021 Bergen Street",
+        "city": "Brooklyn",
+        "zip": "11233.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.92516451426961,
+          40.7561267934487
+        ]
+      },
+      "properties": {
+        "name": "Frank Sinatra H.S.",
+        "address": "35-12 35th Avenue",
+        "city": "Long Island City",
+        "zip": "11101.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.00453928492661,
+          40.652805532485885
+        ]
+      },
+      "properties": {
+        "name": "P.S. 24",
+        "address": "427 38 Street",
+        "city": "Brooklyn",
+        "zip": "11232.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.92945375815141,
+          40.74349499260167
+        ]
+      },
+      "properties": {
+        "name": "Aviation CTE H.S.",
+        "address": "45-30 36 Street",
+        "city": "Long Island City",
+        "zip": "11101.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.89704424213798,
+          40.869933706874875
+        ]
+      },
+      "properties": {
+        "name": "Old Walton H.S.",
+        "address": "2780 Reservoir Avenue",
+        "city": "Bronx",
+        "zip": "10468.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9446461562353,
+          40.82999707805985
+        ]
+      },
+      "properties": {
+        "name": "P.S./I.S. 210 21st Century Academy",
+        "address": "501-503 W 152 Street",
+        "city": "New York",
+        "zip": "10031.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.8853081324496,
+          40.81586895931832
+        ]
+      },
+      "properties": {
+        "name": "Hunts Point School",
+        "address": "730 Bryant Avenue",
+        "city": "Bronx",
+        "zip": "10474.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.97720245197735,
+          40.61524666135812
+        ]
+      },
+      "properties": {
+        "name": "P.S. 226 Alfred De B. Mason",
+        "address": "6006 23 Avenue",
+        "city": "Brooklyn",
+        "zip": "11204.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.90963486079305,
+          40.71126606472365
+        ]
+      },
+      "properties": {
+        "name": "Grover Cleveland H.S.",
+        "address": "21-27 Himrod Street",
+        "city": "Ridgewood",
+        "zip": "11385.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.97854983778396,
+          40.671668058252
+        ]
+      },
+      "properties": {
+        "name": "P.S. 321 William Penn",
+        "address": "180 7 Avenue",
+        "city": "Brooklyn",
+        "zip": "11215.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.10434506993518,
+          40.60899601014516
+        ]
+      },
+      "properties": {
+        "name": "Michael J. Petrides",
+        "address": "715 Ocean Terrace",
+        "city": "Staten Island",
+        "zip": "10301.0",
+        "accessible": "Y",
+        "borocode": "5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.89006273089697,
+          40.72869672739058
+        ]
+      },
+      "properties": {
+        "name": "P.S. 58 School of Heroes",
+        "address": "72-24 Grand Avenue",
+        "city": "Maspeth",
+        "zip": "11378.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.99360201070182,
+          40.716238370835626
+        ]
+      },
+      "properties": {
+        "name": "M.S. 131",
+        "address": "100 Hester Street",
+        "city": "New York",
+        "zip": "10002.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.89046989887038,
+          40.843759841511776
+        ]
+      },
+      "properties": {
+        "name": "P.S. 211",
+        "address": "1919 Prospect Avenue",
+        "city": "Bronx",
+        "zip": "10457.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.93659684849032,
+          40.8391550245309
+        ]
+      },
+      "properties": {
+        "name": "P.S. 8 Luis Belliard",
+        "address": "465 W 167 Street",
+        "city": "New York",
+        "zip": "10032.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.92023462224117,
+          40.672930139059204
+        ]
+      },
+      "properties": {
+        "name": "P.S. 12 Peeks-Davis",
+        "address": "430 Howard Avenue",
+        "city": "Brooklyn",
+        "zip": "11233.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.85266908917056,
+          40.88822009506579
+        ]
+      },
+      "properties": {
+        "name": "Old I.S./H.S. 362",
+        "address": "921 E 228 Street",
+        "city": "Bronx",
+        "zip": "10466.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.78970200437473,
+          40.76498726185747
+        ]
+      },
+      "properties": {
+        "name": "I.S. 25 Adrien Block",
+        "address": "34-65 192 Street",
+        "city": "Flushing",
+        "zip": "11355.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.78520179472864,
+          40.70766542628424
+        ]
+      },
+      "properties": {
+        "name": "P.S./I.S. 268",
+        "address": "92-07 175 Street",
+        "city": "Jamaica",
+        "zip": "11433.0",
+        "accessible": "Y",
+        "borocode": "4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.90699064822998,
+          40.831893585490334
+        ]
+      },
+      "properties": {
+        "name": "P.S. 132 Garret A. Morgan",
+        "address": "1245 Washington Avenue",
+        "city": "Bronx",
+        "zip": "10456.0",
+        "accessible": "Y",
+        "borocode": "2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.98563038662456,
+          40.774899959763296
+        ]
+      },
+      "properties": {
+        "name": "Old Martin Luther King H.S.",
+        "address": "122 Amsterdam Avenue",
+        "city": "New York",
+        "zip": "10023.0",
+        "accessible": "Y",
+        "borocode": "1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.94234931924015,
+          40.673868511927935
+        ]
+      },
+      "properties": {
+        "name": "P.S. 289 George V. Brower",
+        "address": "900 St Marks Avenue",
+        "city": "Brooklyn",
+        "zip": "11213.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.16039310449564,
+          40.58315354996718
+        ]
+      },
+      "properties": {
+        "name": "P.S. 58 Space Shuttle Columbia",
+        "address": "77 Marsh Avenue",
+        "city": "Staten Island",
+        "zip": "10314.0",
+        "accessible": "Y",
+        "borocode": "5"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -74.02453258829522,
+          40.633451401699446
+        ]
+      },
+      "properties": {
+        "name": "I.S. 30 Mary White Ovington",
+        "address": "7002 4 Avenue",
+        "city": "Brooklyn",
+        "zip": "11209.0",
+        "accessible": "Y",
+        "borocode": "3"
+      }
+    }
+  ]
+}

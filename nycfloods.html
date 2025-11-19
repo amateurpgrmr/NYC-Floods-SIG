@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>NYC Floods Map - Interactive Visualization</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#map {
+    height: 100vh;
+    width: 100%;
+}
+
+.info-panel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-width: 320px;
+}
+
+.info-panel h2 {
+    margin: 0 0 10px 0;
+    font-size: 20px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 8px;
+}
+
+.info-panel p {
+    margin: 8px 0;
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.legend {
+    position: absolute;
+    bottom: 30px;
+    right: 10px;
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+    max-width: 280px;
+}
+
+.legend h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: #2c3e50;
+    border-bottom: 2px solid #3498db;
+    padding-bottom: 5px;
+}
+
+.legend-item {
+    margin: 8px 0;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+}
+
+.legend-color {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    border-radius: 3px;
+    border: 1px solid #333;
+}
+
+.legend-marker {
+    width: 12px;
+    height: 12px;
+    margin-right: 10px;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+.leaflet-popup-content {
+    margin: 10px;
+    font-size: 13px;
+}
+
+.leaflet-popup-content h4 {
+    margin: 0 0 8px 0;
+    color: #2c3e50;
+}
+
+.leaflet-popup-content p {
+    margin: 4px 0;
+    color: #555;
+}
+
+.toggle-button {
+    position: absolute;
+    top: 10px;
+    left: 60px;
+    background: white;
+    padding: 8px 12px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    cursor: pointer;
+    font-size: 12px;
+    border: 2px solid #bbb;
+}
+
+.toggle-button:hover {
+    background: #f0f0f0;
+}
+
+@media (max-width: 768px) {
+    .info-panel, .legend {
+        max-width: 200px;
+        font-size: 11px;
+    }
+}
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<div class="info-panel">
+    <h2>NYC Flood Risk Map</h2>
+    <p><strong>Real-time monitoring and flood risk visualization for New York City</strong></p>
+    <p>This map displays multiple data layers including USGS river gauges, FEMA flood zones, stormwater infrastructure, and satellite-detected flooding.</p>
+    <p>Click on any feature to see detailed information. Use the layer control to toggle different data sets.</p>
+</div>
+
+<div class="legend">
+    <h3>Map Layers</h3>
+    <div class="legend-item">
+        <div class="legend-color" style="background: rgba(255, 0, 0, 0.5);"></div>
+        <span>NOAA/FEMA Flood Zones</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-color" style="background: rgba(0, 100, 255, 0.4);"></div>
+        <span>Flood Extent (100/500yr)</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-color" style="background: rgba(255, 140, 0, 0.5);"></div>
+        <span>Sentinel Satellite Detection</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-marker" style="background: #2ecc71;"></div>
+        <span>Stormwater Infrastructure</span>
+    </div>
+    <div class="legend-item">
+        <div class="legend-marker" style="background: #3498db;"></div>
+        <span>USGS River Gauges</span>
+    </div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// Initialize map
+var map = L.map('map').setView([40.7128, -74.0060], 11);
+
+// Add base layer
+var baseLayers = {
+    "Street Map": L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map),
+    "Satellite": L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Esri, DigitalGlobe, GeoEye, Earthstar Geographics'
+    })
+};
+
+// Layer groups for different data types
+var layerGroups = {
+    noaa: L.layerGroup(),
+    stormwater: L.layerGroup(),
+    usgs: L.layerGroup(),
+    sentinel: L.layerGroup(),
+    floodExtent: L.layerGroup()
+};
+
+// Style function for NOAA flood zones
+function noaaStyle(feature) {
+    var color = feature.properties.zone === 'VE' ? '#e74c3c' : '#c0392b';
+    return {
+        fillColor: color,
+        weight: 2,
+        opacity: 1,
+        color: '#8b0000',
+        fillOpacity: 0.5
+    };
+}
+
+// Style function for flood extent
+function floodExtentStyle(feature) {
+    return {
+        fillColor: '#0064ff',
+        weight: 2,
+        opacity: 1,
+        color: '#003d99',
+        fillOpacity: 0.4
+    };
+}
+
+// Style function for sentinel flood detection
+function sentinelStyle(feature) {
+    var opacity = feature.properties.confidence || 0.8;
+    return {
+        fillColor: '#ff8c00',
+        weight: 2,
+        opacity: 1,
+        color: '#cc7000',
+        fillOpacity: opacity * 0.5
+    };
+}
+
+// Custom marker for USGS gauges
+function createUSGSMarker(feature, latlng) {
+    return L.circleMarker(latlng, {
+        radius: 8,
+        fillColor: '#3498db',
+        color: '#2c3e50',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.8
+    });
+}
+
+// Custom marker for stormwater infrastructure
+function createStormwaterMarker(feature, latlng) {
+    return L.circleMarker(latlng, {
+        radius: 7,
+        fillColor: '#2ecc71',
+        color: '#27ae60',
+        weight: 2,
+        opacity: 1,
+        fillOpacity: 0.8
+    });
+}
+
+// Popup content generators
+function noaaPopup(feature) {
+    return `
+        <h4>FEMA Flood Zone</h4>
+        <p><strong>Zone:</strong> ${feature.properties.zone}</p>
+        <p><strong>Area:</strong> ${feature.properties.description}</p>
+        <p><strong>Base Flood Elevation:</strong> ${feature.properties.elevation}</p>
+        <p><em>Zone AE: Areas with 1% annual chance of flooding<br>
+        Zone VE: Coastal areas with wave action</em></p>
+    `;
+}
+
+function stormwaterPopup(feature) {
+    return `
+        <h4>${feature.properties.name}</h4>
+        <p><strong>Type:</strong> ${feature.properties.type}</p>
+        <p><strong>Capacity:</strong> ${feature.properties.capacity_gallons.toLocaleString()} gallons</p>
+        <p><em>Green infrastructure helps manage stormwater runoff and reduce flooding</em></p>
+    `;
+}
+
+function usgsPopup(feature) {
+    return `
+        <h4>USGS Stream Gauge</h4>
+        <p><strong>Location:</strong> ${feature.properties.name}</p>
+        <p><strong>Site Code:</strong> ${feature.properties.siteCode}</p>
+        <p><strong>Monitoring:</strong> ${feature.properties.variable}</p>
+        <p><em>Real-time water level monitoring station</em></p>
+    `;
+}
+
+function sentinelPopup(feature) {
+    return `
+        <h4>Satellite Flood Detection</h4>
+        <p><strong>Location:</strong> ${feature.properties.location}</p>
+        <p><strong>Detection Date:</strong> ${feature.properties.detection_date}</p>
+        <p><strong>Satellite:</strong> ${feature.properties.satellite}</p>
+        <p><strong>Confidence:</strong> ${(feature.properties.confidence * 100).toFixed(0)}%</p>
+        <p><strong>Water Level:</strong> ${feature.properties.water_level}</p>
+    `;
+}
+
+function floodExtentPopup(feature) {
+    return `
+        <h4>Flood Extent Zone</h4>
+        <p><strong>Area:</strong> ${feature.properties.area}</p>
+        <p><strong>Type:</strong> ${feature.properties.flood_type}</p>
+        <p><strong>Risk Level:</strong> ${feature.properties.risk_level}</p>
+    `;
+}
+
+// Load data layers
+function loadLayer(path, layerGroup, options = {}) {
+    fetch(path)
+        .then(r => r.json())
+        .then(data => {
+            L.geoJSON(data, {
+                style: options.style,
+                pointToLayer: options.pointToLayer,
+                onEachFeature: function(feature, layer) {
+                    if (options.popup) {
+                        layer.bindPopup(options.popup(feature));
+                    }
+                }
+            }).addTo(layerGroup);
+            layerGroup.addTo(map);
+        })
+        .catch(e => console.log("Failed loading", path, e));
+}
+
+// Load all layers
+loadLayer('data/noaa_flood.geojson', layerGroups.noaa, {
+    style: noaaStyle,
+    popup: noaaPopup
+});
+
+loadLayer('data/nyc_stormwater.geojson', layerGroups.stormwater, {
+    pointToLayer: createStormwaterMarker,
+    popup: stormwaterPopup
+});
+
+loadLayer('data/usgs_river.geojson', layerGroups.usgs, {
+    pointToLayer: createUSGSMarker,
+    popup: usgsPopup
+});
+
+loadLayer('data/sentinel_flood.geojson', layerGroups.sentinel, {
+    style: sentinelStyle,
+    popup: sentinelPopup
+});
+
+loadLayer('data/ny_floodextent.geojson', layerGroups.floodExtent, {
+    style: floodExtentStyle,
+    popup: floodExtentPopup
+});
+
+// Add layer control
+var overlayLayers = {
+    "NOAA/FEMA Flood Zones": layerGroups.noaa,
+    "Flood Extent Zones": layerGroups.floodExtent,
+    "Sentinel Satellite Detections": layerGroups.sentinel,
+    "Stormwater Infrastructure": layerGroups.stormwater,
+    "USGS River Gauges": layerGroups.usgs
+};
+
+L.control.layers(baseLayers, overlayLayers, {
+    collapsed: false
+}).addTo(map);
+
+// Add scale
+L.control.scale({
+    imperial: true,
+    metric: true
+}).addTo(map);
+</script>
+</body>
+</html>

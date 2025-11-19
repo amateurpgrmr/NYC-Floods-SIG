@@ -1,0 +1,95 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.0200, 40.7000], [-74.0000, 40.7000], [-74.0000, 40.7200],
+          [-74.0200, 40.7200], [-74.0200, 40.7000]
+        ]]
+      },
+      "properties": {
+        "flood_type": "100-Year Floodplain",
+        "area": "Battery Park & Financial District",
+        "risk_level": "High"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.9500, 40.5700], [-73.9300, 40.5700], [-73.9300, 40.5900],
+          [-73.9500, 40.5900], [-73.9500, 40.5700]
+        ]]
+      },
+      "properties": {
+        "flood_type": "500-Year Floodplain",
+        "area": "Brighton Beach & Manhattan Beach",
+        "risk_level": "Moderate"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-74.1700, 40.6000], [-74.1500, 40.6000], [-74.1500, 40.6200],
+          [-74.1700, 40.6200], [-74.1700, 40.6000]
+        ]]
+      },
+      "properties": {
+        "flood_type": "100-Year Floodplain",
+        "area": "Staten Island South Shore",
+        "risk_level": "High"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.7600, 40.5800], [-73.7400, 40.5800], [-73.7400, 40.6000],
+          [-73.7600, 40.6000], [-73.7600, 40.5800]
+        ]]
+      },
+      "properties": {
+        "flood_type": "Coastal Flood Zone",
+        "area": "Rockaway Beach",
+        "risk_level": "Very High"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.9400, 40.7650], [-73.9200, 40.7650], [-73.9200, 40.7850],
+          [-73.9400, 40.7850], [-73.9400, 40.7650]
+        ]]
+      },
+      "properties": {
+        "flood_type": "Riverine Flood Zone",
+        "area": "East Harlem Waterfront",
+        "risk_level": "Moderate"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [[
+          [-73.8000, 40.7400], [-73.7800, 40.7400], [-73.7800, 40.7600],
+          [-73.8000, 40.7600], [-73.8000, 40.7400]
+        ]]
+      },
+      "properties": {
+        "flood_type": "100-Year Floodplain",
+        "area": "LaGuardia Airport Area",
+        "risk_level": "High"
+      }
+    }
+  ]
+}

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NYC Flood 2025 GIS — Dark UI</title>
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.css" />
+
+  <style>
+  :root{--bg:#071024;--panel:#0f1724;--muted:#8b98a8;--text:#e6eef8;--accent:#2dd4bf;--accent-2:#3b82f6;--glass:rgba(255,255,255,0.03);--radius:14px;--shadow:0 12px 40px rgba(2,6,23,0.6)}
+  *{box-sizing:border-box}html,body{height:100%}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto;color:var(--text);background:linear-gradient(180deg,#041124 0%,#071023 60%)}
+  /* Left vertical menu */
+  .side-menu{position:fixed;left:16px;top:80px;width:78px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));backdrop-filter:blur(8px);border-radius:16px;padding:12px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;align-items:center;z-index:1100}
+  .side-menu button{width:54px;height:54px;border-radius:12px;border:none;background:transparent;color:var(--text);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .side-menu button:hover{background:var(--glass)}
+
+  /* Hover layers panel */
+  .layers-panel{position:fixed;left:106px;top:140px;width:300px;padding:12px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 18px 40px rgba(2,6,23,0.6);backdrop-filter:blur(6px);opacity:0;transform:translateY(-8px);transition:all .25s ease;z-index:1050}
+  .layers-panel.visible{opacity:1;transform:none}
+  .layers-panel h4{margin:0 0 8px 0}
+  .layer-row{display:flex;justify-content:space-between;align-items:center;padding:8px;border-radius:8px}
+
+  /* Legend panel */
+  .legend-panel{position:fixed;left:106px;top:210px;width:280px;padding:14px;border-radius:12px;background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01));box-shadow:0 18px 40px rgba(2,6,23,0.6);backdrop-filter:blur(6px);opacity:0;transform:translateY(-8px);transition:all .25s ease;z-index:1050}
+  .legend-panel.visible{opacity:1;transform:none}
+  .legend-panel h4{margin:0 0 10px 0}
+  .legend-item{display:flex;align-items:center;margin:8px 0;font-size:12px}
+  .legend-color{width:20px;height:20px;margin-right:10px;border-radius:4px;border:1px solid rgba(255,255,255,0.2)}
+  .legend-marker{width:12px;height:12px;margin-right:12px;border-radius:50%;border:2px solid #fff}
+
+  /* Page layout */
+  .hero{height:46vh;margin:16px 110px 24px 110px;border-radius:14px;background-image:linear-gradient(135deg,rgba(59,130,246,0.05),rgba(45,212,191,0.03)),url('images/hero.jpg');background-size:cover;background-position:center;padding:28px;position:relative;box-shadow:var(--shadow)}
+  .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,6,23,0.45),rgba(2,6,23,0.2));mix-blend-mode:multiply;border-radius:14px}
+  .hero-inner{position:relative;z-index:2;color:var(--text)}
+
+  .main{display:grid;grid-template-columns:1fr;gap:18px;padding:18px 110px;margin-bottom:40px}
+  .panel{background:linear-gradient(180deg,rgba(15,23,36,0.95),rgba(7,16,36,0.97));backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
+  #map{height:85vh;border-radius:12px;position:relative}
+  #map.fullscreen{position:fixed;top:0;left:0;width:100vw!important;height:100vh!important;z-index:9999;border-radius:0;margin:0}
+  .minimap{position:absolute;left:22px;bottom:22px;width:150px;height:100px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(2,6,23,0.55);z-index:900}
+  .fullscreen-btn{position:absolute;top:10px;right:10px;z-index:1000;background:rgba(7,16,36,0.9);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;backdrop-filter:blur(4px)}
+  .fullscreen-btn:hover{background:rgba(15,23,36,0.95)}
+
+  .sidebar{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px;padding:12px 0}
+  .data-panel{margin-bottom:0}
+  .data-panel h4{margin:0 0 8px 0}
+  .small{font-size:.9rem;color:var(--muted)}
+
+  /* Map legend box */
+  .map-legend{position:absolute;right:22px;bottom:22px;background:rgba(7,16,36,0.92);backdrop-filter:blur(8px);border-radius:12px;padding:16px;box-shadow:0 8px 30px rgba(2,6,23,0.6);border:1px solid rgba(255,255,255,0.1);z-index:900;max-width:280px}
+  .map-legend h4{margin:0 0 12px 0;font-size:14px;color:var(--text)}
+  .map-legend-item{display:flex;align-items:center;margin:6px 0;font-size:11px;color:var(--text)}
+  .map-legend-color{width:16px;height:16px;margin-right:8px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0}
+  .map-legend-marker{width:10px;height:10px;margin-right:10px;border-radius:50%;border:2px solid #fff;flex-shrink:0}
+
+  /* chart */
+  .chart-box{height:200px}
+
+  /* responsive */
+  @media(max-width:1000px){.hero{margin:16px}.sidebar{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<!-- Left vertical glass menu -->
+<div class="side-menu" aria-hidden="false">
+  <button id="btn-layers" title="Layers">🗺️</button>
+  <button id="btn-legend" title="Legend">🔖</button>
+  <button id="btn-data" title="Data">📊</button>
+  <button id="btn-feedback" title="Feedback">✉️</button>
+</div>
+
+<!-- Hover layers panel (appears when hovering layers button) -->
+<div class="layers-panel" id="layers-panel" aria-hidden="true">
+  <h4>Map Layers</h4>
+  <div class="layer-row"><div>NOAA/FEMA Flood Zones</div><div><input type="checkbox" id="l-noaa" checked></div></div>
+  <div class="layer-row"><div>Flood Extent (100/500yr)</div><div><input type="checkbox" id="l-extent" checked></div></div>
+  <div class="layer-row"><div>Sentinel Satellite</div><div><input type="checkbox" id="l-sentinel" checked></div></div>
+  <div class="layer-row"><div>Stormwater Infrastructure</div><div><input type="checkbox" id="l-stormwater" checked></div></div>
+  <div class="layer-row"><div>USGS River Gauges</div><div><input type="checkbox" id="l-usgs" checked></div></div>
+  <div class="layer-row"><div>Evacuation Centers</div><div><input type="checkbox" id="l-evacuation" checked></div></div>
+  <div class="layer-row"><div>Oct 2025 Flood Events</div><div><input type="checkbox" id="l-oct2025" checked></div></div>
+  <div style="height:8px"></div>
+  <div><label class="small">Opacity</label><input type="range" id="layers-opacity" min="0" max="1" step="0.05" value="0.6" style="width:100%"></div>
+  <div style="height:8px"></div>
+  <div><label class="small">Base Map</label>
+    <select id="basemap-select" style="width:100%;padding:4px;background:var(--panel);color:var(--text);border:1px solid var(--glass);border-radius:6px">
+      <option value="street">Street Map</option>
+      <option value="satellite">Satellite</option>
+    </select>
+  </div>
+</div>
+
+<!-- Legend panel -->
+<div class="legend-panel" id="legend-panel" aria-hidden="true">
+  <h4>Legend</h4>
+  <div class="legend-item">
+    <div class="legend-color" style="background: rgba(239, 68, 68, 0.6);"></div>
+    <span>NOAA/FEMA Flood Zones</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: rgba(59, 130, 246, 0.5);"></div>
+    <span>Flood Extent (100/500yr)</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-color" style="background: rgba(249, 115, 22, 0.6);"></div>
+    <span>Sentinel Satellite Detection</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-marker" style="background: #10b981;"></div>
+    <span>Stormwater Infrastructure</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-marker" style="background: #3b82f6;"></div>
+    <span>USGS River Gauges</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-marker" style="background: #8b5cf6;"></div>
+    <span>Evacuation Centers</span>
+  </div>
+  <div class="legend-item">
+    <div class="legend-marker" style="background: #dc2626; width: 16px; height: 16px;"></div>
+    <span>Oct 2025 Events (Critical/Extreme)</span>
+  </div>
+  <div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1)">
+    <div class="small" style="margin-bottom:6px"><strong>Flood Zones:</strong></div>
+    <div class="small" style="margin-left:10px">• AE: 1% annual flood chance</div>
+    <div class="small" style="margin-left:10px">• VE: Coastal with wave action</div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="kicker small">USGS • FEMA • ESA Sentinel • NYC ENV • NOAA</div>
+    <h2>NYC Flood 2025 — Real-Time Monitoring & Risk Dashboard</h2>
+    <p class="small">Interactive visualization integrating real-time USGS river gauges, FEMA flood zones, satellite flood detection, evacuation centers, and October 2025 flood event data. Includes record-breaking rainfall analysis from the historic October 30, 2025 storm that shattered 108-year-old precipitation records.</p>
+  </div>
+</section>
+
+<main class="main">
+  <div>
+    <div class="panel">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><strong>Interactive Flood Map</strong><div class="small">Hover over left menu icons to control layers and view legend</div></div><div class="small"><span id="data-count">Loading...</span> data points • 7 layers</div></div>
+      <div id="map">
+        <button class="fullscreen-btn" id="fullscreen-btn" title="Toggle Fullscreen">⛶</button>
+        <div class="map-legend">
+          <h4>Map Legend</h4>
+          <div class="map-legend-item">
+            <div class="map-legend-color" style="background: rgba(239, 68, 68, 0.6);"></div>
+            <span>NOAA/FEMA Flood Zones (AE/VE)</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-color" style="background: rgba(59, 130, 246, 0.5);"></div>
+            <span>Flood Extent (100/500yr)</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-color" style="background: rgba(249, 115, 22, 0.6);"></div>
+            <span>Sentinel Satellite Flood Detection</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-marker" style="background: #10b981;"></div>
+            <span>Stormwater Infrastructure</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-marker" style="background: #3b82f6;"></div>
+            <span>USGS River Gauges</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-marker" style="background: #8b5cf6;"></div>
+            <span>Evacuation Centers</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-marker" style="background: #dc2626; width: 12px; height: 12px;"></div>
+            <span>Oct 2025 Events (Critical)</span>
+          </div>
+          <div class="map-legend-item">
+            <div class="map-legend-marker" style="background: #ea580c; width: 12px; height: 12px;"></div>
+            <span>Oct 2025 Events (Extreme)</span>
+          </div>
+          <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.15)">
+            <div class="small" style="font-size:10px">
+              <strong>Zones:</strong> AE = 1% annual flood | VE = Coastal wave action
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="panel data-panel">
+      <h4>USGS River Gauges (15 stations)</h4>
+      <p class="small">Real-time monitoring stations tracking gage height across NYC waterways including the Bronx River, Alley Creek, Valley Stream, and Passaic River system. Click any blue marker to view current monitoring data.</p>
+      <div class="small" style="margin-top:8px">Source: USGS National Water Information System.</div>
+    </div>
+
+    <div class="panel data-panel">
+      <h4>FEMA Flood Zones (8 zones)</h4>
+      <p class="small">Designated flood hazard areas showing AE zones (1% annual flood chance) and VE zones (coastal areas with wave action). Covers critical areas like Red Hook, Lower Manhattan, Coney Island, and Rockaway Peninsula.</p>
+      <div class="small" style="margin-top:8px">Source: FEMA Flood Insurance Rate Maps (FIRM).</div>
+    </div>
+
+    <div class="panel data-panel">
+      <h4>Stormwater Infrastructure (10 facilities)</h4>
+      <p class="small">Green infrastructure locations including rain gardens, bioswales, detention basins, and constructed wetlands. Total capacity exceeds 200,000 gallons across all five boroughs for managing stormwater runoff.</p>
+      <div class="small" style="margin-top:8px">Source: NYC Environmental Protection.</div>
+    </div>
+
+    <div class="panel data-panel">
+      <h4>Sentinel Satellite Detections (8 areas)</h4>
+      <p class="small">Recent flood detections from Sentinel-1 and Sentinel-2 satellites with confidence levels ranging from 84-95%. Monitors coastal flooding at locations like Coney Island, Rockaway Beach, and Canarsie.</p>
+      <div class="small" style="margin-top:8px">Source: ESA Copernicus Sentinel Data.</div>
+    </div>
+
+    <div class="panel data-panel">
+      <h4>Hurricane Evacuation Centers (60 facilities)</h4>
+      <p class="small">Official NYC emergency evacuation and shelter processing centers across all five boroughs. These facilities serve as staging areas where residents are processed before transport to hurricane shelters. Most locations are wheelchair accessible schools and community centers.</p>
+      <div class="small" style="margin-top:8px">Source: NYC Emergency Management.</div>
+    </div>
+
+    <div class="panel data-panel">
+      <h4>October 2025 Flood Events (6 recorded incidents)</h4>
+      <p class="small">Historic flooding event on October 30, 2025. Central Park recorded 1.85 inches of rainfall breaking a 108-year record. LaGuardia Airport saw 2.09 inches. Two fatalities occurred from basement flooding in Crown Heights and Washington Heights. Peak rainfall rate of 6 inches/hour overwhelmed the city's 1.75 in/hr sewer capacity.</p>
+      <div class="small" style="margin-top:8px">Source: NOAA, National Weather Service, NYC Emergency Management.</div>
+    </div>
+
+    <div class="panel data-panel">
+      <h4>Projected Flood Risk (Chart)</h4>
+      <div class="chart-box"><canvas id="riskChart"></canvas></div>
+      <div class="small" style="margin-top:8px">Chart shows an illustrative projection of increasing high-tide flood days (derived from NOAA regional outlooks and local sea-level trends).</div>
+    </div>
+  </aside>
+</main>
+
+<footer style="padding:18px 24px;text-align:center;color:var(--muted)">Data sources: USGS Water Services, FEMA National Flood Hazard Layer, NYC Environmental Protection, NYC Emergency Management, ESA Copernicus Sentinel, NOAA National Weather Service, NYC Open Data.</footer>
+
+<!-- Leaflet + Chart.js -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+// layers panel hover mechanics
+const btnLayers = document.getElementById('btn-layers');
+const layersPanel = document.getElementById('layers-panel');
+btnLayers.addEventListener('mouseenter', ()=>{layersPanel.classList.add('visible');layersPanel.setAttribute('aria-hidden','false')});
+btnLayers.addEventListener('mouseleave', ()=>{setTimeout(()=>{if(!layersPanel.matches(':hover')){layersPanel.classList.remove('visible');layersPanel.setAttribute('aria-hidden','true')}},150)});
+layersPanel.addEventListener('mouseleave', ()=>{layersPanel.classList.remove('visible');layersPanel.setAttribute('aria-hidden','true')});
+
+// legend panel hover mechanics
+const btnLegend = document.getElementById('btn-legend');
+const legendPanel = document.getElementById('legend-panel');
+btnLegend.addEventListener('mouseenter', ()=>{legendPanel.classList.add('visible');legendPanel.setAttribute('aria-hidden','false')});
+btnLegend.addEventListener('mouseleave', ()=>{setTimeout(()=>{if(!legendPanel.matches(':hover')){legendPanel.classList.remove('visible');legendPanel.setAttribute('aria-hidden','true')}},150)});
+legendPanel.addEventListener('mouseleave', ()=>{legendPanel.classList.remove('visible');legendPanel.setAttribute('aria-hidden','true')});
+
+// Initialize map
+const map = L.map('map').setView([40.7128,-74.0060],11);
+const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+const satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19,attribution:'Esri, DigitalGlobe'});
+
+// Layer groups for different data types
+const layerGroups = {
+  noaa: L.layerGroup().addTo(map),
+  extent: L.layerGroup().addTo(map),
+  sentinel: L.layerGroup().addTo(map),
+  stormwater: L.layerGroup().addTo(map),
+  usgs: L.layerGroup().addTo(map),
+  evacuation: L.layerGroup().addTo(map),
+  oct2025: L.layerGroup().addTo(map)
+};
+
+// Style functions
+function noaaStyle(feature) {
+  const color = feature.properties.zone === 'VE' ? '#ef4444' : '#dc2626';
+  return {fillColor: color, weight: 2, opacity: 1, color: '#7f1d1d', fillOpacity: 0.6};
+}
+
+function extentStyle(feature) {
+  return {fillColor: '#3b82f6', weight: 2, opacity: 1, color: '#1e40af', fillOpacity: 0.5};
+}
+
+function sentinelStyle(feature) {
+  const opacity = feature.properties.confidence || 0.8;
+  return {fillColor: '#f97316', weight: 2, opacity: 1, color: '#c2410c', fillOpacity: opacity * 0.6};
+}
+
+function createStormwaterMarker(feature, latlng) {
+  return L.circleMarker(latlng, {radius: 7, fillColor: '#10b981', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9});
+}
+
+function createUSGSMarker(feature, latlng) {
+  return L.circleMarker(latlng, {radius: 8, fillColor: '#3b82f6', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9});
+}
+
+function createEvacuationMarker(feature, latlng) {
+  return L.circleMarker(latlng, {radius: 7, fillColor: '#8b5cf6', color: '#fff', weight: 2, opacity: 1, fillOpacity: 0.9});
+}
+
+function createFloodEventMarker(feature, latlng) {
+  const severity = feature.properties.severity;
+  const color = severity === 'Critical' ? '#dc2626' : severity === 'Extreme' ? '#ea580c' : '#f59e0b';
+  return L.circleMarker(latlng, {radius: 10, fillColor: color, color: '#fff', weight: 3, opacity: 1, fillOpacity: 0.85});
+}
+
+// Popup generators
+function noaaPopup(feature) {
+  return `<div style="color:#071024"><h4 style="margin:0 0 8px">${feature.properties.description}</h4>
+    <p style="margin:4px 0"><strong>Zone:</strong> ${feature.properties.zone}</p>
+    <p style="margin:4px 0"><strong>Elevation:</strong> ${feature.properties.elevation}</p>
+    <p style="margin:8px 0 0;font-size:11px;color:#555"><em>Zone AE: 1% annual flood chance | Zone VE: Coastal wave action</em></p></div>`;
+}
+
+function extentPopup(feature) {
+  return `<div style="color:#071024"><h4 style="margin:0 0 8px">${feature.properties.area}</h4>
+    <p style="margin:4px 0"><strong>Type:</strong> ${feature.properties.flood_type}</p>
+    <p style="margin:4px 0"><strong>Risk:</strong> ${feature.properties.risk_level}</p></div>`;
+}
+
+function sentinelPopup(feature) {
+  return `<div style="color:#071024"><h4 style="margin:0 0 8px">Satellite Detection</h4>
+    <p style="margin:4px 0"><strong>Location:</strong> ${feature.properties.location}</p>
+    <p style="margin:4px 0"><strong>Date:</strong> ${feature.properties.detection_date}</p>
+    <p style="margin:4px 0"><strong>Satellite:</strong> ${feature.properties.satellite}</p>
+    <p style="margin:4px 0"><strong>Confidence:</strong> ${(feature.properties.confidence * 100).toFixed(0)}%</p>
+    <p style="margin:4px 0"><strong>Water Level:</strong> ${feature.properties.water_level}</p></div>`;
+}
+
+function stormwaterPopup(feature) {
+  return `<div style="color:#071024"><h4 style="margin:0 0 8px">${feature.properties.name}</h4>
+    <p style="margin:4px 0"><strong>Type:</strong> ${feature.properties.type}</p>
+    <p style="margin:4px 0"><strong>Capacity:</strong> ${feature.properties.capacity_gallons.toLocaleString()} gallons</p>
+    <p style="margin:8px 0 0;font-size:11px;color:#555"><em>Green infrastructure manages stormwater runoff</em></p></div>`;
+}
+
+function usgsPopup(feature) {
+  return `<div style="color:#071024"><h4 style="margin:0 0 8px">USGS Gauge</h4>
+    <p style="margin:4px 0"><strong>Location:</strong> ${feature.properties.name}</p>
+    <p style="margin:4px 0"><strong>Code:</strong> ${feature.properties.siteCode}</p>
+    <p style="margin:4px 0"><strong>Monitoring:</strong> ${feature.properties.variable}</p></div>`;
+}
+
+function evacuationPopup(feature) {
+  return `<div style="color:#071024"><h4 style="margin:0 0 8px">Evacuation Center</h4>
+    <p style="margin:4px 0"><strong>Facility:</strong> ${feature.properties.name}</p>
+    <p style="margin:4px 0"><strong>Address:</strong> ${feature.properties.address}</p>
+    <p style="margin:4px 0"><strong>City:</strong> ${feature.properties.city}, NY ${feature.properties.zip}</p>
+    <p style="margin:4px 0"><strong>Accessible:</strong> ${feature.properties.accessible === 'Y' ? 'Yes' : 'No'}</p>
+    <p style="margin:8px 0 0;font-size:11px;color:#555"><em>Hurricane evacuation and shelter processing center</em></p></div>`;
+}
+
+function floodEventPopup(feature) {
+  const p = feature.properties;
+  let details = `<div style="color:#071024"><h4 style="margin:0 0 8px">${p.location}</h4>
+    <p style="margin:4px 0"><strong>Event:</strong> ${p.event_type}</p>
+    <p style="margin:4px 0"><strong>Date:</strong> ${p.date}</p>
+    <p style="margin:4px 0"><strong>Severity:</strong> ${p.severity}</p>`;
+
+  if (p.rainfall_inches) details += `<p style="margin:4px 0"><strong>Rainfall:</strong> ${p.rainfall_inches}" (previous record: ${p.previous_record}" in ${p.record_year})</p>`;
+  if (p.fatalities) details += `<p style="margin:4px 0;color:#dc2626"><strong>Fatalities:</strong> ${p.fatalities}</p>`;
+  if (p.rainfall_rate) details += `<p style="margin:4px 0"><strong>Peak Rate:</strong> ${p.rainfall_rate}</p>`;
+
+  details += `<p style="margin:8px 0 0;font-size:11px;color:#555"><em>${p.description}</em></p></div>`;
+  return details;
+}
+
+// Load data layers
+function loadLayer(path, layerGroup, options = {}) {
+  fetch(path)
+    .then(r => r.json())
+    .then(data => {
+      L.geoJSON(data, {
+        style: options.style,
+        pointToLayer: options.pointToLayer,
+        onEachFeature: (feature, layer) => {
+          if (options.popup) layer.bindPopup(options.popup(feature));
+        }
+      }).addTo(layerGroup);
+    })
+    .catch(e => console.log("Failed loading", path, e));
+}
+
+// Load all layers
+loadLayer('data/noaa_flood.geojson', layerGroups.noaa, {style: noaaStyle, popup: noaaPopup});
+loadLayer('data/ny_floodextent.geojson', layerGroups.extent, {style: extentStyle, popup: extentPopup});
+loadLayer('data/sentinel_flood.geojson', layerGroups.sentinel, {style: sentinelStyle, popup: sentinelPopup});
+loadLayer('data/nyc_stormwater.geojson', layerGroups.stormwater, {pointToLayer: createStormwaterMarker, popup: stormwaterPopup});
+loadLayer('data/usgs_river.geojson', layerGroups.usgs, {pointToLayer: createUSGSMarker, popup: usgsPopup});
+loadLayer('data/evacuation_centers.geojson', layerGroups.evacuation, {pointToLayer: createEvacuationMarker, popup: evacuationPopup});
+loadLayer('data/oct2025_flood_events.geojson', layerGroups.oct2025, {pointToLayer: createFloodEventMarker, popup: floodEventPopup});
+
+// Layer controls
+const layerControls = {
+  'l-noaa': layerGroups.noaa,
+  'l-extent': layerGroups.extent,
+  'l-sentinel': layerGroups.sentinel,
+  'l-stormwater': layerGroups.stormwater,
+  'l-usgs': layerGroups.usgs,
+  'l-evacuation': layerGroups.evacuation,
+  'l-oct2025': layerGroups.oct2025
+};
+
+Object.keys(layerControls).forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('change', (e) => {
+      const layer = layerControls[id];
+      e.target.checked ? map.addLayer(layer) : map.removeLayer(layer);
+    });
+  }
+});
+
+// Opacity control
+const layersOpacity = document.getElementById('layers-opacity');
+layersOpacity.addEventListener('input', (e) => {
+  const v = parseFloat(e.target.value);
+  layerGroups.noaa.eachLayer(l => { if (l.setStyle) l.setStyle({fillOpacity: v}); });
+  layerGroups.extent.eachLayer(l => { if (l.setStyle) l.setStyle({fillOpacity: v * 0.8}); });
+  layerGroups.sentinel.eachLayer(l => { if (l.setStyle) l.setStyle({fillOpacity: v * 0.7}); });
+});
+
+// Basemap switcher
+const basemapSelect = document.getElementById('basemap-select');
+basemapSelect.addEventListener('change', (e) => {
+  if (e.target.value === 'satellite') {
+    map.removeLayer(streetLayer);
+    map.addLayer(satelliteLayer);
+  } else {
+    map.removeLayer(satelliteLayer);
+    map.addLayer(streetLayer);
+  }
+});
+
+// Add scale
+L.control.scale({imperial: true, metric: true, position: 'bottomleft'}).addTo(map);
+
+// Fullscreen functionality
+const fullscreenBtn = document.getElementById('fullscreen-btn');
+const mapDiv = document.getElementById('map');
+let isFullscreen = false;
+
+fullscreenBtn.addEventListener('click', () => {
+  isFullscreen = !isFullscreen;
+  if (isFullscreen) {
+    mapDiv.classList.add('fullscreen');
+    fullscreenBtn.textContent = '⛶';
+    fullscreenBtn.title = 'Exit Fullscreen';
+  } else {
+    mapDiv.classList.remove('fullscreen');
+    fullscreenBtn.textContent = '⛶';
+    fullscreenBtn.title = 'Toggle Fullscreen';
+  }
+  setTimeout(() => map.invalidateSize(), 100);
+});
+
+// Count total data points and update display
+let totalPoints = 0;
+Object.values(layerGroups).forEach(group => {
+  group.eachLayer(() => totalPoints++);
+});
+setTimeout(() => {
+  totalPoints = 0;
+  Object.values(layerGroups).forEach(group => {
+    group.eachLayer(() => totalPoints++);
+  });
+  document.getElementById('data-count').textContent = totalPoints;
+}, 2000);
+
+// Chart: illustrative projected high-tide flood days
+const ctx = document.getElementById('riskChart').getContext('2d');
+const years = [2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
+const highTideDays = [3,4,5,6,7,8,9,10,11,12,13];
+const chart = new Chart(ctx, {
+  type:'line',
+  data:{
+    labels:years,
+    datasets:[{
+      label:'High-tide flood days/year (Northeast)',
+      data:highTideDays,
+      fill:true,
+      backgroundColor:'rgba(96,165,250,0.12)',
+      borderColor:'rgba(96,165,250,0.9)',
+      tension:0.3,
+      pointRadius:4
+    }]
+  },
+  options:{
+    scales:{y:{beginAtZero:true}},
+    plugins:{legend:{display:true}}
+  }
+});
+
+</script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9654,
+          40.7829
+        ]
+      },
+      "properties": {
+        "location": "Central Park",
+        "event_type": "Record Rainfall",
+        "date": "2025-10-30",
+        "rainfall_inches": 1.85,
+        "previous_record": 1.64,
+        "record_year": 1917,
+        "severity": "Extreme",
+        "description": "Record-breaking rainfall: 1.85 inches in one day, breaking 108-year-old record"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.874,
+          40.7769
+        ]
+      },
+      "properties": {
+        "location": "LaGuardia Airport",
+        "event_type": "Record Rainfall",
+        "date": "2025-10-30",
+        "rainfall_inches": 2.09,
+        "previous_record": 1.18,
+        "record_year": 1955,
+        "severity": "Extreme",
+        "description": "2.09 inches recorded, surpassing 1955 record"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9441,
+          40.6698
+        ]
+      },
+      "properties": {
+        "location": "Crown Heights, Brooklyn",
+        "event_type": "Fatality - Basement Flooding",
+        "date": "2025-10-30",
+        "severity": "Critical",
+        "fatalities": 1,
+        "description": "One person died after becoming trapped in flooded basement"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9418,
+          40.8448
+        ]
+      },
+      "properties": {
+        "location": "Washington Heights, Manhattan",
+        "event_type": "Fatality - Basement Flooding",
+        "date": "2025-10-30",
+        "severity": "Critical",
+        "fatalities": 1,
+        "description": "One person died after becoming trapped in flooded basement"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.8,
+          40.75
+        ]
+      },
+      "properties": {
+        "location": "Queens",
+        "event_type": "Severe Flooding",
+        "date": "2025-10-30",
+        "severity": "High",
+        "description": "Record-breaking rainfall caused widespread street flooding, submerged vehicles"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -73.9654,
+          40.7829
+        ]
+      },
+      "properties": {
+        "location": "NYC-wide",
+        "event_type": "Infrastructure Impact",
+        "date": "2025-10-30",
+        "rainfall_rate": "6 inches per hour",
+        "system_capacity": "1.75 inches per hour",
+        "severity": "Extreme",
+        "description": "Sewer system overwhelmed: 1 inch in 10 minutes (6 in/hr rate) vs 1.75 in/hr capacity"
+      }
+    }
+  ]
+}
