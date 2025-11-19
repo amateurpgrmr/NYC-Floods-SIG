@@ -40,7 +40,11 @@
   .main{display:grid;grid-template-columns:1fr;gap:18px;padding:18px 110px;margin-bottom:40px}
   .panel{background:linear-gradient(180deg,rgba(15,23,36,0.95),rgba(7,16,36,0.97));backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
   #map{height:85vh;border-radius:12px;position:relative}
-  #map.fullscreen{position:fixed;top:0;left:0;width:100vw!important;height:100vh!important;z-index:9999;border-radius:0;margin:0}
+  .map-container{position:relative}
+  .map-container.fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:var(--bg);display:grid;grid-template-columns:1fr 380px;gap:0}
+  .map-container.fullscreen #map{width:100%;height:100vh;border-radius:0;margin:0}
+  .map-container.fullscreen .fullscreen-sidebar{display:block}
+  .map-container.fullscreen .map-legend{display:none}
   .minimap{position:absolute;left:22px;bottom:22px;width:150px;height:100px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(2,6,23,0.55);z-index:900}
   .fullscreen-btn{position:absolute;top:10px;right:10px;z-index:1000;background:rgba(7,16,36,0.9);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;backdrop-filter:blur(4px)}
   .fullscreen-btn:hover{background:rgba(15,23,36,0.95)}
@@ -56,6 +60,16 @@
   .map-legend-item{display:flex;align-items:center;margin:6px 0;font-size:11px;color:var(--text)}
   .map-legend-color{width:16px;height:16px;margin-right:8px;border-radius:3px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0}
   .map-legend-marker{width:10px;height:10px;margin-right:10px;border-radius:50%;border:2px solid #fff;flex-shrink:0}
+
+  /* Fullscreen sidebar */
+  .fullscreen-sidebar{display:none;height:100vh;overflow-y:auto;background:var(--bg);padding:20px;border-left:1px solid rgba(255,255,255,0.1)}
+  .fullscreen-sidebar h3{margin:0 0 16px 0;font-size:20px;color:var(--text)}
+  .fullscreen-sidebar h4{margin:16px 0 8px 0;font-size:16px;color:var(--text)}
+  .fullscreen-legend-item{display:flex;align-items:center;margin:10px 0;font-size:13px;color:var(--text)}
+  .fullscreen-legend-color{width:20px;height:20px;margin-right:10px;border-radius:4px;border:1px solid rgba(255,255,255,0.2);flex-shrink:0}
+  .fullscreen-legend-marker{width:14px;height:14px;margin-right:12px;border-radius:50%;border:2px solid #fff;flex-shrink:0}
+  .description-section{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)}
+  .description-section p{font-size:12px;line-height:1.6;color:var(--muted);margin:8px 0}
 
   /* chart */
   .chart-box{height:200px}
@@ -145,6 +159,7 @@
   <div>
     <div class="panel">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px"><div><strong>Interactive Flood Map</strong><div class="small">Hover over left menu icons to control layers and view legend</div></div><div class="small"><span id="data-count">Loading...</span> data points • 7 layers</div></div>
+      <div class="map-container" id="map-container">
       <div id="map">
         <button class="fullscreen-btn" id="fullscreen-btn" title="Toggle Fullscreen">⛶</button>
         <div class="map-legend">
@@ -187,6 +202,74 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <!-- Fullscreen Sidebar -->
+      <div class="fullscreen-sidebar">
+        <h3>Map Legend & Information</h3>
+
+        <h4>Layer Symbols</h4>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-color" style="background: rgba(239, 68, 68, 0.6);"></div>
+          <span>NOAA/FEMA Flood Zones (AE/VE)</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-color" style="background: rgba(59, 130, 246, 0.5);"></div>
+          <span>Flood Extent (100/500yr)</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-color" style="background: rgba(249, 115, 22, 0.6);"></div>
+          <span>Sentinel Satellite Flood Detection</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-marker" style="background: #10b981;"></div>
+          <span>Stormwater Infrastructure</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-marker" style="background: #3b82f6;"></div>
+          <span>USGS River Gauges</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-marker" style="background: #8b5cf6;"></div>
+          <span>Evacuation Centers</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-marker" style="background: #dc2626;"></div>
+          <span>Oct 2025 Events - Critical</span>
+        </div>
+        <div class="fullscreen-legend-item">
+          <div class="fullscreen-legend-marker" style="background: #ea580c;"></div>
+          <span>Oct 2025 Events - Extreme</span>
+        </div>
+
+        <div class="description-section">
+          <h4>Flood Zone Definitions</h4>
+          <p><strong>Zone AE:</strong> Areas with a 1% annual chance of flooding (100-year floodplain). Base Flood Elevations are determined.</p>
+          <p><strong>Zone VE:</strong> Coastal areas with 1% or greater annual chance of flooding with additional hazards from storm-induced velocity wave action.</p>
+        </div>
+
+        <div class="description-section">
+          <h4>October 2025 Historic Flooding</h4>
+          <p><strong>Central Park:</strong> 1.85 inches of rainfall broke a 108-year record from 1917.</p>
+          <p><strong>LaGuardia Airport:</strong> 2.09 inches recorded, surpassing the 1955 record.</p>
+          <p><strong>Fatalities:</strong> Two people died from basement flooding in Crown Heights, Brooklyn and Washington Heights, Manhattan.</p>
+          <p><strong>System Overwhelmed:</strong> Peak rainfall rate of 6 inches/hour far exceeded the city's sewer system capacity of 1.75 inches/hour.</p>
+        </div>
+
+        <div class="description-section">
+          <h4>Data Layers</h4>
+          <p><strong>USGS River Gauges (15 stations):</strong> Real-time monitoring of gage height across NYC waterways including Bronx River, Alley Creek, and Valley Stream.</p>
+          <p><strong>Hurricane Evacuation Centers (60 facilities):</strong> Official NYC emergency processing centers where residents are staged before transport to shelters.</p>
+          <p><strong>Sentinel Satellites (8 areas):</strong> Recent flood detections from ESA Copernicus Sentinel-1 and Sentinel-2 with 84-95% confidence levels.</p>
+          <p><strong>Stormwater Infrastructure (10 facilities):</strong> Green infrastructure including rain gardens, bioswales, and detention basins with 200,000+ gallons total capacity.</p>
+        </div>
+
+        <div class="description-section">
+          <h4>Data Sources</h4>
+          <p>USGS Water Services • FEMA National Flood Hazard Layer • NYC Environmental Protection • NYC Emergency Management • ESA Copernicus Sentinel • NOAA National Weather Service • NYC Open Data</p>
+        </div>
+      </div>
+
       </div>
     </div>
   </div>
@@ -439,17 +522,17 @@ L.control.scale({imperial: true, metric: true, position: 'bottomleft'}).addTo(ma
 
 // Fullscreen functionality
 const fullscreenBtn = document.getElementById('fullscreen-btn');
-const mapDiv = document.getElementById('map');
+const mapContainer = document.getElementById('map-container');
 let isFullscreen = false;
 
 fullscreenBtn.addEventListener('click', () => {
   isFullscreen = !isFullscreen;
   if (isFullscreen) {
-    mapDiv.classList.add('fullscreen');
-    fullscreenBtn.textContent = '⛶';
+    mapContainer.classList.add('fullscreen');
+    fullscreenBtn.textContent = '✕';
     fullscreenBtn.title = 'Exit Fullscreen';
   } else {
-    mapDiv.classList.remove('fullscreen');
+    mapContainer.classList.remove('fullscreen');
     fullscreenBtn.textContent = '⛶';
     fullscreenBtn.title = 'Toggle Fullscreen';
   }
