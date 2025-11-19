@@ -8,7 +8,6 @@
 
   <!-- Leaflet CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.min.css" />
 
   <style>
   :root{--bg:#071024;--panel:#0f1724;--muted:#8b98a8;--text:#e6eef8;--accent:#2dd4bf;--accent-2:#3b82f6;--glass:rgba(255,255,255,0.03);--radius:14px;--shadow:0 12px 40px rgba(2,6,23,0.6)}
@@ -41,10 +40,16 @@
   .panel{background:linear-gradient(180deg,rgba(15,23,36,0.95),rgba(7,16,36,0.97));backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:14px;box-shadow:0 12px 30px rgba(0,0,0,0.6)}
   #map{height:85vh;border-radius:12px;position:relative}
   .map-container{position:relative}
-  .map-container.fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:9999;background:var(--bg);display:grid;grid-template-columns:1fr 380px;gap:0}
-  .map-container.fullscreen #map{width:100%;height:100vh;border-radius:0;margin:0}
-  .map-container.fullscreen .fullscreen-sidebar{display:block}
-  .map-container.fullscreen .map-legend{display:none}
+  .map-container.fullscreen{position:fixed!important;top:0!important;left:0!important;width:100vw!important;height:100vh!important;z-index:10000!important;background:var(--bg);display:grid!important;grid-template-columns:1fr 380px!important;gap:0!important;margin:0!important;padding:0!important}
+  .map-container.fullscreen #map{width:100%!important;height:100vh!important;border-radius:0!important;margin:0!important}
+  .map-container.fullscreen .fullscreen-sidebar{display:block!important}
+  .map-container.fullscreen .map-legend{display:none!important}
+  body.fullscreen-active{overflow:hidden!important}
+  body.fullscreen-active .hero,
+  body.fullscreen-active .sidebar,
+  body.fullscreen-active .side-menu,
+  body.fullscreen-active .layers-panel,
+  body.fullscreen-active .legend-panel{display:none!important}
   .minimap{position:absolute;left:22px;bottom:22px;width:150px;height:100px;border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.04);box-shadow:0 8px 30px rgba(2,6,23,0.55);z-index:900}
   .fullscreen-btn{position:absolute;top:10px;right:10px;z-index:1000;background:rgba(7,16,36,0.9);color:var(--text);border:1px solid rgba(255,255,255,0.1);padding:8px 12px;border-radius:8px;cursor:pointer;font-size:16px;backdrop-filter:blur(4px)}
   .fullscreen-btn:hover{background:rgba(15,23,36,0.95)}
@@ -70,9 +75,6 @@
   .fullscreen-legend-marker{width:14px;height:14px;margin-right:12px;border-radius:50%;border:2px solid #fff;flex-shrink:0}
   .description-section{margin-top:20px;padding-top:20px;border-top:1px solid rgba(255,255,255,0.1)}
   .description-section p{font-size:12px;line-height:1.6;color:var(--muted);margin:8px 0}
-
-  /* chart */
-  .chart-box{height:200px}
 
   /* responsive */
   @media(max-width:1000px){.hero{margin:16px}.sidebar{grid-template-columns:1fr}}
@@ -310,20 +312,13 @@
       <p class="small">Historic flooding event on October 30, 2025. Central Park recorded 1.85 inches of rainfall breaking a 108-year record. LaGuardia Airport saw 2.09 inches. Two fatalities occurred from basement flooding in Crown Heights and Washington Heights. Peak rainfall rate of 6 inches/hour overwhelmed the city's 1.75 in/hr sewer capacity.</p>
       <div class="small" style="margin-top:8px">Source: NOAA, National Weather Service, NYC Emergency Management.</div>
     </div>
-
-    <div class="panel data-panel">
-      <h4>Projected Flood Risk (Chart)</h4>
-      <div class="chart-box"><canvas id="riskChart"></canvas></div>
-      <div class="small" style="margin-top:8px">Chart shows an illustrative projection of increasing high-tide flood days (derived from NOAA regional outlooks and local sea-level trends).</div>
-    </div>
   </aside>
 </main>
 
 <footer style="padding:18px 24px;text-align:center;color:var(--muted)">Data sources: USGS Water Services, FEMA National Flood Hazard Layer, NYC Environmental Protection, NYC Emergency Management, ESA Copernicus Sentinel, NOAA National Weather Service, NYC Open Data.</footer>
 
-<!-- Leaflet + Chart.js -->
+<!-- Leaflet -->
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
 // layers panel hover mechanics
@@ -529,10 +524,12 @@ fullscreenBtn.addEventListener('click', () => {
   isFullscreen = !isFullscreen;
   if (isFullscreen) {
     mapContainer.classList.add('fullscreen');
+    document.body.classList.add('fullscreen-active');
     fullscreenBtn.textContent = '✕';
     fullscreenBtn.title = 'Exit Fullscreen';
   } else {
     mapContainer.classList.remove('fullscreen');
+    document.body.classList.remove('fullscreen-active');
     fullscreenBtn.textContent = '⛶';
     fullscreenBtn.title = 'Toggle Fullscreen';
   }
@@ -551,30 +548,6 @@ setTimeout(() => {
   });
   document.getElementById('data-count').textContent = totalPoints;
 }, 2000);
-
-// Chart: illustrative projected high-tide flood days
-const ctx = document.getElementById('riskChart').getContext('2d');
-const years = [2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030];
-const highTideDays = [3,4,5,6,7,8,9,10,11,12,13];
-const chart = new Chart(ctx, {
-  type:'line',
-  data:{
-    labels:years,
-    datasets:[{
-      label:'High-tide flood days/year (Northeast)',
-      data:highTideDays,
-      fill:true,
-      backgroundColor:'rgba(96,165,250,0.12)',
-      borderColor:'rgba(96,165,250,0.9)',
-      tension:0.3,
-      pointRadius:4
-    }]
-  },
-  options:{
-    scales:{y:{beginAtZero:true}},
-    plugins:{legend:{display:true}}
-  }
-});
 
 </script>
 </body>
